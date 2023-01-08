@@ -18,5 +18,25 @@
     <ClCompile Include="cdbg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CdbgOut.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debugger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CdbgEvents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CdbgOut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debugger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CdbgEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

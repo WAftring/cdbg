@@ -128,6 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cdbg.cpp" />
+    <ClCompile Include="CdbgEvents.cpp" />
+    <ClCompile Include="CdbgOut.cpp" />
+    <ClCompile Include="debugger.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CdbgEvents.h" />
+    <ClInclude Include="CdbgOut.h" />
+    <ClInclude Include="debugger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

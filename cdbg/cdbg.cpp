@@ -4,51 +4,33 @@
 #include <iostream>
 #include <DbgEng.h>
 #include <stdio.h>
+#include "debugger.h"
+#include "CdbgOut.h"
 
 #pragma comment(lib, "dbgeng.lib")
 #define VERSION 1
 #define FLAGS 0
 
-#define DBG_SUCCESS(func) \
-hr = func; \
-if (!SUCCEEDED(hr)) \
-	printf("Dbg invocation failed with error: %x\n", hr); \
-	goto Exit;\
- }\
-
+CdbgOut g_dbgOutput;
+HANDLE g_hRunning;
 // https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/dbgeng/nf-dbgeng-debugconnectwide
+// https://stackoverflow.com/questions/34470177/get-output-of-executed-windbg-command
 HRESULT CdbgInit(PULONG Version, PULONG Flags);
 HRESULT CdbgFunc1(PDEBUG_CLIENT Client, PCSTR Args);
 int main()
 {
-	IDebugClient* dbgClient = NULL;
-	IDebugInputCallbacks* dbgInput = NULL;
-	IDebugOutputCallbacks* dbgOutput = NULL;
-	IDebugEventCallbacks* dbgCallbacks = NULL;
-	IDebugControl3* dbgCtrl = NULL;
-	ULONG dt = 0;
-	HRESULT hr;
-	hr = DebugCreate(__uuidof(IDebugClient), (void**)&dbgClient);
-	if (!SUCCEEDED(hr))
-	{
-		printf("DebugCreate failed with error: %x\n", hr);
+	HANDLE hDbgThread = NULL;
+	hDbgThread = CreateThread(NULL, 0, DbgMain, NULL, NULL, NULL);
+	if (NULL == hDbgThread)
 		goto Exit;
-	}
-	dbgClient->ConnectSession(0, 500);
-	dbgClient->GetEventCallbacks(&dbgCallbacks);
-	dbgClient->GetInputCallbacks(&dbgInput);
-	dbgClient->GetOutputCallbacks(&dbgOutput);
-	dbgClient->QueryInterface(__uuidof(IDebugControl3), (void**)&dbgCtrl);
-	dbgCtrl->SetExecutionStatus(DEBUG_STATUS_GO);
-	dbgClient->OpenDumpFile("C:\\CaseData\\2204190040006874_Morgan\\2022-12-05\\lsass.exe.1696.dmp");
-	dbgCtrl->WaitForEvent(0, INFINITE);
-	dbgCtrl->GetCurrentTimeDate(&dt);
+	WaitForSingleObject(hDbgThread, INFINITE);
 
-	printf("Date Time: %lu\n", dt);
 Exit:
 	
 	return 0;
 }
+
+
 
 HRESULT CdbgInit(PULONG Version, PULONG Flags
 )
@@ -72,6 +54,8 @@ HRESULT CdbgFunc1(PDEBUG_CLIENT Client, PCSTR Args)
 {
 	return S_OK;
 }
+
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
