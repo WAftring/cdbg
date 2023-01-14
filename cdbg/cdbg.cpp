@@ -32,6 +32,7 @@ int main(int argc, char* argv[])
 	}
 	return 0;
 }
+
 bool DispatchLine(const char* line)
 {
 	DWORD dwResult = 0;

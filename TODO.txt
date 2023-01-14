@@ -1,0 +1,5 @@
+# Basic functionality
+	* Figure out why I can't load extensions
+	* Figure out how to handle more complex debugger input
+# Future Features
+	* Add a get history command
