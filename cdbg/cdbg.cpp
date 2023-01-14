@@ -2,68 +2,66 @@
 //
 #include <Windows.h>
 #include <iostream>
-#include <DbgEng.h>
 #include <stdio.h>
-#include "debugger.h"
-#include "CdbgOut.h"
+#include "Shio.h"
+#include "dbgio.h"
 
-#pragma comment(lib, "dbgeng.lib")
+
 #define VERSION 1
 #define FLAGS 0
 
-CdbgOut g_dbgOutput;
-HANDLE g_hRunning;
 // https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/dbgeng/nf-dbgeng-debugconnectwide
 // https://stackoverflow.com/questions/34470177/get-output-of-executed-windbg-command
-HRESULT CdbgInit(PULONG Version, PULONG Flags);
-HRESULT CdbgFunc1(PDEBUG_CLIENT Client, PCSTR Args);
-int main()
-{
-	HANDLE hDbgThread = NULL;
-	hDbgThread = CreateThread(NULL, 0, DbgMain, NULL, NULL, NULL);
-	if (NULL == hDbgThread)
-		goto Exit;
-	WaitForSingleObject(hDbgThread, INFINITE);
+bool DispatchLine(const char* line);
+bool ParseArgs(int argc, char* argv[]);
+void ShowHelp();
 
-Exit:
-	
+int main(int argc, char* argv[])
+{
+	bool running = true;
+	std::string input;
+	DbgioInit();
+#if _DEBUG
+	DbgioAttachDump("C:\\Users\\Will\\source\\repos\\WAftring\\cdbg\\x64\\Debug\\Notepad.exe_230114_114430.dmp");
+#endif
+	while (running)
+	{
+		std::cout << "> ";
+		std::getline(std::cin, input);
+		running = DispatchLine(input.c_str());
+	}
 	return 0;
 }
-
-
-
-HRESULT CdbgInit(PULONG Version, PULONG Flags
-)
+bool DispatchLine(const char* line)
 {
-	*Version = VERSION;
-	*Flags = 0;
-	return S_OK;
+	DWORD dwResult = 0;
+	if (!ShioMatchInvoke(line))
+		dwResult = GetLastError();
+	if (SH_NOMATCH == dwResult)
+	{
+		DbgioInvoke(line);
+		dwResult = GetLastError();
+	}
+	return (dwResult == SH_CONTINUE || dwResult == DBGIO_CONTINUE);
 }
 
-void CdbgUninit()
+bool ParseArgs(int argc, char* argv[])
 {
-	
+	if (argc == 1)
+		return true;
+	for (int i = 1; i < argc; i++)
+	{
+		if (strcmp("--help", argv[i]))
+		{
+			ShowHelp();
+			return false;
+		}
+		else
+			return DBGIO_FAIL != DbgioAttachDump(argv[i]);
+	}
 }
 
-void CdbgNotify(ULONG Notify, ULONG64 Argument)
+void ShowHelp()
 {
-	
+	// TODO(will): Write me
 }
-
-HRESULT CdbgFunc1(PDEBUG_CLIENT Client, PCSTR Args)
-{
-	return S_OK;
-}
-
-
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

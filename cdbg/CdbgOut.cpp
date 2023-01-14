@@ -49,6 +49,7 @@ CdbgOut::Output(
     _In_ PCSTR Text
 )
 {
+    // TODO(will): This should eventually be more complex
     UNREFERENCED_PARAMETER(Mask);
     fputs(Text, stdout);
     return S_OK;

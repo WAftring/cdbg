@@ -21,10 +21,13 @@
     <ClCompile Include="CdbgOut.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="debugger.cpp">
+    <ClCompile Include="dbgio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CdbgEvents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +35,16 @@
     <ClInclude Include="CdbgOut.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="debugger.h">
+    <ClInclude Include="dbgio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CdbgEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
