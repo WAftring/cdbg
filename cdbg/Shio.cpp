@@ -1,7 +1,7 @@
 #include "Shio.h"
-#include "dbgio.h"
-#include <tuple>
-#include <array>
+#include "dbgio.hpp"
+
+#define MAX_TOKENS 1024
 
 DWORD ShioQuit(const char* line);	
 DWORD ShioOpen(const char* line);
@@ -10,28 +10,39 @@ DWORD ShioClear(const char* line);
 DWORD ShioLoadExt(const char* line);
 
 typedef DWORD (*ShCommand)(const char*);
-std::array<std::tuple<const char*, ShCommand>, 4> ShFuncMap =
+typedef struct ShFuncMatch 
 {
-	std::make_tuple(".quit", ShioQuit),
-	std::make_tuple(".dopen", ShioOpen),
-	std::make_tuple(".dclose", ShioClose),
-	std::make_tuple(".cls", ShioClear)
+	const char* Key;
+	ShCommand Command;
+} ShFuncMatch;
+
+ShFuncMatch ShFuncMap[] =
+{
+	{".quit", ShioQuit},
+	{".dopen", ShioOpen},
+	{".dclose", ShioClose},
+	{".cls", ShioClear}
 };
 
-bool ShioMatchInvoke(const char* line)
+void ShioInit()
+{
+	DbgioInit();
+}
+
+BOOL ShioMatchInvoke(char* line)
 {
 	DWORD dwResult = 0;
-	for (auto it : ShFuncMap)
+	BOOL bNoMatch = TRUE; 
+
+
+	for (int i = 0; i < sizeof(ShFuncMap) / sizeof(ShFuncMap[0]); i++)
 	{
-		if (strcmp(std::get<0>(it), line) == 0)
-		{
-			dwResult = std::get<1>(it)(line);
-			SetLastError(dwResult);
-			return dwResult == SH_CONTINUE;
-		}
+		if (strcmp(line, ShFuncMap[i].Key) == 0)
+			return ShFuncMap[i].Command(line) == SH_CONTINUE;
 	}
-	SetLastError(SH_NOMATCH);
-	return false;
+	if(bNoMatch)
+		return DbgioInvoke(line) == DBGIO_CONTINUE;
+	return TRUE;
 }
 
 DWORD ShioQuit(const char* line)

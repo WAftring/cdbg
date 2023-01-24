@@ -30,21 +30,27 @@
     <ClCompile Include="Shio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="history.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CdbgOut.h">
+    <ClInclude Include="CdbgOut.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dbgio.h">
+    <ClInclude Include="dbgio.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CdbgEvents.h">
+    <ClInclude Include="CdbgEvents.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="history.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

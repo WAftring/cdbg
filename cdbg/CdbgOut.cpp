@@ -1,4 +1,4 @@
-#include "CdbgOut.h"
+#include "CdbgOut.hpp"
 
 STDMETHODIMP
 CdbgOut::QueryInterface(

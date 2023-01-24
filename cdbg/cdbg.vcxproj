@@ -132,12 +132,14 @@
     <ClCompile Include="CdbgEvents.cpp" />
     <ClCompile Include="CdbgOut.cpp" />
     <ClCompile Include="dbgio.cpp" />
+    <ClCompile Include="history.cpp" />
     <ClCompile Include="Shio.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CdbgEvents.h" />
-    <ClInclude Include="CdbgOut.h" />
-    <ClInclude Include="dbgio.h" />
+    <ClInclude Include="CdbgEvents.hpp" />
+    <ClInclude Include="CdbgOut.hpp" />
+    <ClInclude Include="dbgio.hpp" />
+    <ClInclude Include="history.h" />
     <ClInclude Include="Shio.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>

@@ -2,9 +2,6 @@
 
 #include <Windows.h>
 #include <stdio.h>
-#include <DbgEng.h>
-#include "CdbgOut.h"
-#include "CdbgEvents.h"
 
 #define DBGIO_UNINITALIZED 0
 #define DBGIO_OK 1
@@ -13,6 +10,12 @@
 #define DBGIO_STOP 4
 #define DBGIO_NOMATCH 0xFFFF
 
-bool DbgioInit();
-bool DbgioInvoke(const char* szCommand);
-DWORD DbgioAttachDump(const char* szDumpPath);
+#ifdef _cplusplus
+extern "C" {
+#endif
+	BOOL DbgioInit();
+	DWORD DbgioInvoke(const char* szCommand);
+	DWORD DbgioAttachDump(const char* szDumpPath);
+#ifdef _cplusplus
+}
+#endif

@@ -1,4 +1,8 @@
-#include "dbgio.h"
+#include "dbgio.hpp"
+#include <DbgEng.h>
+
+#include "CdbgOut.hpp"
+#include "CdbgEvents.hpp"
 #define LOG_IF_FAIL(hr, msg) \
 if (!SUCCEEDED(hr)) \
 {\
@@ -26,7 +30,7 @@ IDebugEventCallbacks* pDbgCallbacks = NULL;
 IDebugControl3* pDbgCtrl = NULL;
 bool g_Initialized; 
 
-bool DbgioInit()
+BOOL DbgioInit()
 {
 	HRESULT hr = S_OK;
 	if (g_Initialized)
@@ -51,17 +55,16 @@ Exit:
 	return S_OK == hr;
 }
 
-bool DbgioInvoke(const char* szCommand)
+DWORD DbgioInvoke(const char* szCommand)
 {
 	HRESULT hr = S_OK;
-	DWORD dwResult = DBGIO_STOP;
+	DWORD dwResult = DBGIO_CONTINUE;
 	hr = pDbgCtrl->Execute(DEBUG_OUTCTL_THIS_CLIENT, szCommand, NULL);
 	//LOG_IF_FAIL(hr, "Execute failed with error: %x\n");
-	dwResult = DBGIO_CONTINUE;
-	SetLastError(DBGIO_CONTINUE);
+	// TODO(will): Add some logic for determining a fatal HRESULT
 Exit:
 	
-	return dwResult == DBGIO_CONTINUE;
+	return dwResult;
 }
 
 DWORD DbgioAttachDump(const char* szDumpPath)
