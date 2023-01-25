@@ -2,6 +2,7 @@
 #include "dbgio.hpp"
 #include "history.h"
 #include "filereader.h"
+#include "conwriter.h"
 
 #define MAX_TOKENS 1024
 
@@ -12,6 +13,7 @@ DWORD ShioDumpFile(int nArgs, LPWSTR* szArgs);
 DWORD ShioClear(int nArgs, LPWSTR* szArgs);
 DWORD ShioHelp(int nArgs, LPWSTR* szArgs);
 DWORD ShioHistory(int nArgs, LPWSTR* szArgs);
+DWORD ShioHighlight(int nArgs, LPWSTR* szArgs);
 
 typedef DWORD (*ShCommand)(int, LPWSTR*);
 typedef struct ShFuncMatch 
@@ -28,7 +30,8 @@ ShFuncMatch ShFuncMap[] =
 	{L".close", ShioClose},
 	{L".cls", ShioClear},
 	{L".shelp", ShioHelp},
-	{L".hist", ShioHistory}
+	{L".hist", ShioHistory},
+	{L"hl", ShioHighlight}
 };
 
 void ShioInit()
@@ -143,4 +146,10 @@ DWORD ShioHistory(int nArgs, LPWSTR* szArgs)
 	// TODO(will): Print a specific history
 	HiPrintHistory();
 	return SH_CONTINUE;
+}
+
+DWORD ShioHighlight(int nArgs, LPWSTR* szArgs)
+{
+	if(nArgs >= 1)
+		Cw
 }
