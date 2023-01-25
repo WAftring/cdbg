@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <stdio.h>
 #include "Shio.h"
+#include "conwriter.h"
 
 
 #define VERSION 1
@@ -27,8 +28,10 @@ int wmain(int argc, WCHAR* argv[])
 	while (bRunning)
 	{
 		ZeroMemory(pszInput, buffSize);
+		CwUpdateTitle(READY);
 		_cputws(L"> ");
 		ReadInput(&pszInput, &buffSize);
+		CwUpdateTitle(BUSY);
 		bRunning = DispatchLine(pszInput);
 	}
 	free(pszInput);

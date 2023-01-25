@@ -131,6 +131,8 @@
     <ClCompile Include="cdbg.cpp" />
     <ClCompile Include="CdbgEvents.cpp" />
     <ClCompile Include="CdbgOut.cpp" />
+    <ClCompile Include="conreader.cpp" />
+    <ClCompile Include="conwriter.cpp" />
     <ClCompile Include="dbgio.cpp" />
     <ClCompile Include="filereader.cpp" />
     <ClCompile Include="history.cpp" />
@@ -139,6 +141,8 @@
   <ItemGroup>
     <ClInclude Include="CdbgEvents.hpp" />
     <ClInclude Include="CdbgOut.hpp" />
+    <ClInclude Include="conreader.h" />
+    <ClInclude Include="conwriter.h" />
     <ClInclude Include="dbgio.hpp" />
     <ClInclude Include="filereader.h" />
     <ClInclude Include="history.h" />

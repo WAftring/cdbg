@@ -36,6 +36,12 @@
     <ClCompile Include="filereader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="conreader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="conwriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CdbgOut.hpp">
@@ -57,6 +63,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="filereader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="conreader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="conwriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

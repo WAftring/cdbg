@@ -82,6 +82,7 @@ DWORD ShioClose(int nArgs, LPWSTR* szArgs)
 
 DWORD ShioDumpFile(int nArgs, LPWSTR* szArgs)
 {
+	// TODO(will): I need to figure out how to handle source...
 	WCHAR *szFileName = NULL;
 	WCHAR szFilePath[MAX_PATH];
 	DWORD dwLine = 0;
