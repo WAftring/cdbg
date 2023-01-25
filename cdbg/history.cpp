@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 int g_Index = 0;
-char* g_History[MAX_HISTORY];
+WCHAR* g_History[MAX_HISTORY];
 
 void HiInitHistory()
 {
@@ -12,11 +12,13 @@ void HiInitHistory()
 		g_History[i] = NULL;
 }
 
-void HiAddHistory(const char* line)
+void HiAddHistory(const WCHAR* line)
 {
-	int len = strlen(line);
-	g_History[g_Index] = (char*)malloc(sizeof(char) * len);
-	memcpy(g_History[g_Index], line, len);
+	int len = wcslen(line);
+	g_History[g_Index] = (WCHAR*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(WCHAR) * len);
+	if (NULL == g_History[g_Index])
+		return;
+	memcpy(g_History[g_Index], line, len * sizeof(WCHAR));
 	g_Index++;
 	g_Index = g_Index % MAX_HISTORY;
 }
@@ -24,5 +26,9 @@ void HiAddHistory(const char* line)
 void HiPrintHistory()
 {
 	for (int i = 0; i < MAX_HISTORY; i++)
-		puts(g_History[i]);
+	{
+		if(NULL != g_History[i])
+			_putws(g_History[i]);
+	}
+	_putws(L"");
 }

@@ -4,7 +4,6 @@
 #include <conio.h>
 #include <stdio.h>
 #include "Shio.h"
-#include "history.h"
 
 
 #define VERSION 1
@@ -12,21 +11,23 @@
 
 // https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/dbgeng/nf-dbgeng-debugconnectwide
 // https://stackoverflow.com/questions/34470177/get-output-of-executed-windbg-command
-void ReadInput(char** ppszInput, int* pBuffSize);
-BOOL DispatchLine(char* line);
-BOOL ParseArgs(int argc, char* argv[]);
+void ReadInput(WCHAR** ppszInput, int* pBuffSize);
+BOOL DispatchLine(WCHAR* line);
+BOOL ParseArgs(int argc, WCHAR* argv[]);
 void ShowHelp();
 
-int main(int argc, char* argv[])
+int wmain(int argc, WCHAR* argv[])
 {
 	BOOL bRunning = TRUE;
 	int buffSize = 1024;
-	char* pszInput = (char*)malloc(sizeof(char) * buffSize);
+	WCHAR* pszInput = (WCHAR*)malloc(sizeof(WCHAR) * buffSize);
+	if (NULL == pszInput)
+		return -1;
 	ShioInit();
 	while (bRunning)
 	{
 		ZeroMemory(pszInput, buffSize);
-		_cputs("> ");
+		_cputws(L"> ");
 		ReadInput(&pszInput, &buffSize);
 		bRunning = DispatchLine(pszInput);
 	}
@@ -34,14 +35,14 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-void ReadInput(char** ppszInput, int* pBuffSize)
+void ReadInput(WCHAR** ppszInput, int* pBuffSize)
 {
 	BOOL bEOL = FALSE;
 	int i = 0;
-	char* szInput = *ppszInput;
+	WCHAR* szInput = *ppszInput;
 	while (!bEOL)
 	{
-		char c = getc(stdin);
+		WCHAR c = getc(stdin);
 		if ('\n' == c)
 			bEOL = TRUE;
 		else
@@ -52,18 +53,20 @@ void ReadInput(char** ppszInput, int* pBuffSize)
 	}
 }
 
-BOOL DispatchLine(char* line)
+BOOL DispatchLine(WCHAR* line)
 {
+	if (wcslen(line) == 0)
+		return TRUE;
 	return ShioMatchInvoke(line);
 }
 
-BOOL ParseArgs(int argc, char* argv[])
+BOOL ParseArgs(int argc, WCHAR* argv[])
 {
 	if (argc == 1)
 		return TRUE;
 	for (int i = 1; i < argc; i++)
 	{
-		if (strcmp("--help", argv[i]))
+		if (wcscmp(L"--help", argv[i]))
 		{
 			ShowHelp();
 			return FALSE;
@@ -75,4 +78,5 @@ BOOL ParseArgs(int argc, char* argv[])
 void ShowHelp()
 {
 	// TODO(will): Write me
+	_putws(L"TODO(will): Write me");
 }

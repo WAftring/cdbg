@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <stdio.h>
+#include "util.h"
 
 #define DBGIO_UNINITALIZED 0
 #define DBGIO_OK 1
@@ -14,8 +15,10 @@
 extern "C" {
 #endif
 	BOOL DbgioInit();
-	DWORD DbgioInvoke(const char* szCommand);
-	DWORD DbgioAttachDump(const char* szDumpPath);
+	DWORD DbgioInvoke(const WCHAR* szCommand);
+	DWORD DbgioAttachDump(const WCHAR* szDumpPath);
+	DWORD DbgioGetCSourceFile(WCHAR** ppFilePath, DWORD* pdwLine);
+	DWORD DbgioGetFilePath(const WCHAR* szFileName, WCHAR** szPathBuffer, DWORD dwBufferSize);
 #ifdef _cplusplus
 }
 #endif

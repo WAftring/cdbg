@@ -1,11 +1,28 @@
 #pragma once
 #include <Windows.h>
-inline BOOL WIN32_FROM_HRESULT(HRESULT hr, OUT DWORD* pDWORD)
-{
-	if (hr < 0)
-	{
-		*pDWORD = (DWORD)hr;
-		return TRUE;
-	}
-	return FALSE;
-}
+#include <stdio.h>
+
+#define LOG_IF_FAIL(hr, msg) \
+if (!SUCCEEDED(hr)) \
+{\
+	printf(msg, hr); \
+	goto Exit;\
+ }\
+
+
+#define LOG_IF_NULL(h, msg)  \
+if (NULL == h) \
+{\
+	dwError = GetLastError(); \
+	printf(msg, dwError); \
+	goto Exit;\
+ }\
+
+#define LOG_LASTERROR(msg) \
+{ \
+	printf(msg, GetLastError()); \
+	goto Exit; \
+} \
+
+#define MIN(a, b) (((a) < (b) ? (a) : (b)))
+#define MAX(a, b) (((a) > (b) ? (a) : (b)))

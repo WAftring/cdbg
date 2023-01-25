@@ -6,4 +6,4 @@
 #define SH_NOMATCH 0xFFFF
 
 void ShioInit();
-BOOL ShioMatchInvoke(char* line);
+BOOL ShioMatchInvoke(WCHAR* line);
