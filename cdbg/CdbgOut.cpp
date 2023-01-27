@@ -1,5 +1,5 @@
 #include "CdbgOut.hpp"
-
+#include "conwriter.h"
 STDMETHODIMP
 CdbgOut::QueryInterface(
     THIS_
@@ -46,11 +46,11 @@ STDMETHODIMP
 CdbgOut::Output(
     THIS_
     _In_ ULONG Mask,
-    _In_ PCSTR Text
+    _In_ PCWSTR Text
 )
 {
     // TODO(will): This should eventually be more complex
     UNREFERENCED_PARAMETER(Mask);
-    fputs(Text, stdout);
+    CwWrite(Text);
     return S_OK;
 }

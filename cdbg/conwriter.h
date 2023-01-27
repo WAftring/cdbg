@@ -1,4 +1,3 @@
-
 #pragma once
 #include <Windows.h>
 
@@ -8,8 +7,6 @@ typedef enum ConState
 	BUSY
 };
 
-// Predefined color combos
-
-
 DWORD CwUpdateTitle(ConState state);
-DWORD CwAddHighlight(DWORD dwColor, WCHAR* pszWord);
+DWORD CwAddHighlight(WCHAR* pszWord);
+DWORD CwWrite(const WCHAR* pszString);

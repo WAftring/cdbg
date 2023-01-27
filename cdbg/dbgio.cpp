@@ -51,8 +51,8 @@ BOOL DbgioInit()
 	hr = pDbgClient->ConnectSession(0, 500);
 	LOG_IF_FAIL(hr, "pDbgClient->ConnectSession failed with: %x\n");
 	pDbgClient->SetOutputMask(DEBUG_OUTPUT_NORMAL | DEBUG_OUTPUT_ERROR);
-	hr = pDbgClient->SetOutputCallbacks(pDbgOutput);
-	LOG_IF_FAIL(hr, "pDbgClient->SetOutputCallbacks failed with: %x\n");
+	hr = pDbgClient->SetOutputCallbacksWide(pDbgOutput);
+	LOG_IF_FAIL(hr, "pDbgClient->SetOutputCallbacksWide failed with: %x\n");
 	hr = pDbgClient->SetEventCallbacks((PDEBUG_EVENT_CALLBACKS)pDbgCallbacks);
 	LOG_IF_FAIL(hr, "pDbgClient->SetEventCallbacks failed with: %x\n");
 	//hr = pDbgClient->GetEventCallbacks(&pDbgCallbacks);

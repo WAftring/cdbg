@@ -5,7 +5,7 @@
 
 #pragma comment(lib, "dbgeng.lib")
 
-class CdbgOut : public IDebugOutputCallbacks
+class CdbgOut : public IDebugOutputCallbacksWide
 {
 public:
     // IUnknown.
@@ -25,7 +25,7 @@ public:
     STDMETHOD(Output)(
         THIS_
         _In_ ULONG Mask,
-        _In_ PCSTR Text
+        _In_ PCWSTR Text
         );
 };
 

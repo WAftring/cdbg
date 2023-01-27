@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-int g_Index = 0;
+int g_histIndex = 0;
 WCHAR* g_History[MAX_HISTORY];
 
 void HiInitHistory()
@@ -15,12 +15,12 @@ void HiInitHistory()
 void HiAddHistory(const WCHAR* line)
 {
 	int len = wcslen(line);
-	g_History[g_Index] = (WCHAR*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(WCHAR) * len);
-	if (NULL == g_History[g_Index])
+	g_History[g_histIndex] = (WCHAR*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(WCHAR) * len);
+	if (NULL == g_History[g_histIndex])
 		return;
-	memcpy(g_History[g_Index], line, len * sizeof(WCHAR));
-	g_Index++;
-	g_Index = g_Index % MAX_HISTORY;
+	memcpy(g_History[g_histIndex], line, len * sizeof(WCHAR));
+	g_histIndex++;
+	g_histIndex = g_histIndex % MAX_HISTORY;
 }
 
 void HiPrintHistory()

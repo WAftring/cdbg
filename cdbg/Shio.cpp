@@ -50,14 +50,12 @@ BOOL ShioMatchInvoke(WCHAR* line)
 		HiAddHistory(line);
 	wszArgs = CommandLineToArgvW(line, &nArgs);
 
-	for (int i = 0; i < sizeof(ShFuncMap) / sizeof(ShFuncMap[0]); i++)
+	for (int i = 0; i < ARRAY_LENGTH(ShFuncMap); i++)
 	{
 		if (wcscmp(wszArgs[0], ShFuncMap[i].Key) == 0)
 			return ShFuncMap[i].Command(nArgs, wszArgs) == SH_CONTINUE;
 	}
-	if(bNoMatch)
-		return DbgioInvoke(line) == DBGIO_CONTINUE;
-	return TRUE;
+	return DbgioInvoke(line) == DBGIO_CONTINUE;
 }
 
 DWORD ShioQuit(int nArgs, LPWSTR* szArgs)
@@ -150,6 +148,8 @@ DWORD ShioHistory(int nArgs, LPWSTR* szArgs)
 
 DWORD ShioHighlight(int nArgs, LPWSTR* szArgs)
 {
-	if(nArgs >= 1)
-		Cw
+	// doesn't matter just hl
+	if (2 == nArgs)
+		CwAddHighlight(szArgs[1]);
+	return SH_CONTINUE;
 }
